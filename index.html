@@ -5,12 +5,48 @@
     <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/addons/p5.sound.min.js"></script>
     <script src="https://unpkg.com/ml5@0.4.2/dist/ml5.min.js"></script>
-    <meta charset="utf-8" />
 
+    <link href="src/styles/videoControls.css" rel="stylesheet" type="text/css" />
+    <link href="src/styles/recorder.css" rel="stylesheet" type="text/css" />
+
+    <meta charset="utf-8" />
 </head>
 
 <body>
-    <script src="src/poseget.js"></script>
+    <!--<script src="src/poseget.js"></script>-->
+    <script src="src/recorder.js"></script>
+    <div class="controls">
+        <div class="top-controls">
+            <div class="left top-control-box">
+                <h2>Preview</h2>
+                <video id="preview" width="160" height="120" autoplay muted></video>
+                <div id="startButton" class="button">
+                    Start
+                </div>
+                <div id="stopButton" class="button">
+                    Stop
+                </div>
+            </div>
+            <div class="right top-control-box">
+                <h2>Recording</h2>
+                <video id="recording" width="160" height="120" controls></video>
+                
+                <a id="downloadButton" class="button">
+                    Download
+                </a>
+                <a id="uploadButton" class="button">
+                    Upload
+                </a>
+            </div>
+            <div class="upload top-control-box">
+                <h2>Pose review</h2>
+                <video id="uploaded" width="160" height="120" controls></video>
+            </div>
+        </div>
+        <div class="bottom">
+            <pre id="log"></pre>
+        </div>
+    </div>
 </body>
 
 </html>
