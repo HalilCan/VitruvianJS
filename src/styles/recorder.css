@@ -27,7 +27,7 @@ h2 {
 }
 
 .controls {
-    max-width: 500px;
+    max-width: 1000px;
     display: flex;
     flex-direction: column;
 }

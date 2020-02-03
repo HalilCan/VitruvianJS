@@ -13,7 +13,6 @@
 </head>
 
 <body>
-    <!--<script src="src/poseget.js"></script>-->
     <script src="src/recorder.js"></script>
     <div class="controls">
         <div class="top-controls">
@@ -30,7 +29,7 @@
             <div class="right top-control-box">
                 <h2>Recording</h2>
                 <video id="recording" width="160" height="120" controls></video>
-                
+
                 <a id="downloadButton" class="button">
                     Download
                 </a>
@@ -38,6 +37,8 @@
                     Upload
                 </a>
             </div>
+        </div>
+        <div class="top-controls">
             <div class="upload top-control-box">
                 <h2>Pose review</h2>
                 <video id="uploaded" width="160" height="120" controls></video>
@@ -45,8 +46,10 @@
         </div>
         <div class="bottom">
             <pre id="log"></pre>
+            <!--<script src="src/poseget.js"></script>-->-->
         </div>
     </div>
+    
 </body>
 
 </html>
