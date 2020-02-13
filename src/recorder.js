@@ -84,24 +84,24 @@ function localFileVideoPlayer() {
     element.innerHTML = message
     element.className = isError ? 'error' : 'info'
   }
-  var playSelectedFile = function (event) {
-    var file = this.files[0]
-    var type = file.type
-    var videoNode = document.querySelector('video')
-    var canPlay = videoNode.canPlayType(type)
+  let playSelectedFile = function (event) {
+    let file = this.files[0]
+    let type = file.type
+    let videoNode = document.querySelector('video')
+    let canPlay = videoNode.canPlayType(type)
     if (canPlay === '') canPlay = 'no'
-    var message = 'Can play type "' + type + '": ' + canPlay
-    var isError = canPlay === 'no'
+    let message = 'Can play type "' + type + '": ' + canPlay
+    let isError = canPlay === 'no'
     displayMessage(message, isError)
 
     if (isError) {
-      return
+      return;
     }
 
-    var fileURL = URL.createObjectURL(file)
+    let fileURL = URL.createObjectURL(file)
     videoNode.src = fileURL
   }
-  var inputNode = document.querySelector('input')
+  let inputNode = document.getElementById('uploaded')
   inputNode.addEventListener('change', playSelectedFile, false)
 }
 
