@@ -17,16 +17,16 @@ function gotPoses(poses) {
     pose = poses[0].pose;
     skeleton = poses[0].skeleton;
   }
-  /*
   let torsoVec = torsoVector(pose);
   if (torsoVec != undefined) {
     let upperArmVecs = upperArmVectors(pose);
     if (upperArmVecs[0] != undefined) {
       let rightAngle = upperArmToTorsoAngle(upperArmVecs[0], torsoVec);
-      Console.log(rightAngle, rightAngle * 2 * Math.PI);
+      console.log(rightAngle, rightAngle * 180 / Math.PI);
     }
-  }
-  */ 
+  } else {
+      console.log("tv is undefined");
+  } 
 }
 
 function modelLoaded() {

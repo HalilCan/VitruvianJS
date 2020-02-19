@@ -26,8 +26,7 @@ class Vector {
         this.confidence);
     }
     dot(v){
-      return (this.x * v.x + this.y * v.y + this.z * v.z, 
-        (this.confidence + v.confidence) / 2);
+      return (this.x * v.x + this.y * v.y + this.z * v.z);
       //equivalent to |this||v|cosTheta
     }
     cross(v) {
