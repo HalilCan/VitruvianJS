@@ -48,6 +48,10 @@ h2 {
     padding: 0px;
 }
 
+.angle-reporter {
+    font-size: larger;
+}
+
 .bottom {
     clear: both;
     margin-top: 20px;
