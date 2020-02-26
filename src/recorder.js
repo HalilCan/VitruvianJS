@@ -121,8 +121,13 @@ let updateReporter = (reporter, htmlUpdate) => {
     reporter.innerHTML = update;
 }
 
-let updateRuleReporter = (htmlUpdate) => {
-    ruleReporter.innerHTML = htmlUpdate;
+let updateRuleReporter = (updateObject) => {
+    if (updateObject[0] == 0) {
+        ruleReporter.className = "red";
+    } else if (updateObject[0] == 1) {
+        ruleReporter.className = "green";
+    }
+    ruleReporter.innerHTML = updateObject[1];
 }
 
 window.addEventListener('load',

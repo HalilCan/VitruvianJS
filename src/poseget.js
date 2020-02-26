@@ -86,9 +86,9 @@ function gotPoses(poses) {
     clapCount += clapResult.change;
     isClap = clapResult.state;
     if (clapResult.isTorsoUpright == 0) {
-        updateRuleReporter(`X - Keep your torso upright when you clap. Clap count: ${clapCount}`);
+        updateRuleReporter([0, `X - Keep your torso upright when you clap. Clap count: ${clapCount}`]);
     } else {
-        updateRuleReporter(`:) Please clap. Clap count: ${clapCount}`);
+        updateRuleReporter([1, `:) Please clap. Clap count: ${clapCount}`]);
     }
 
 }

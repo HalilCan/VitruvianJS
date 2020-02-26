@@ -23,6 +23,12 @@
     width: 1600px;
 }
 
+#rule-reporter {
+    font-size: x-large;
+    width: 400px;
+    height: 300px;
+}
+
 .upper-container {
     flex: 1;
     display: flex;
@@ -39,4 +45,12 @@
     border: 1px solid black;
     border-radius: 4px;
     min-width: 400px;
+}
+
+.red {
+    background-color: red;
+}
+
+.green {
+    background-color: green;
 }
