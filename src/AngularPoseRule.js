@@ -21,7 +21,7 @@ class AngularPoseRule {
     }
 
     setMinAngles(angleArray) {
-        
+
     }
 
     getJointAngles() {
@@ -126,7 +126,7 @@ class AngularPoseRule {
         }
 
         return Math.acos(freeVector.dot(orthoVector) /
-        (freeVector.norm() * orthoVector.norm()))
+            (freeVector.norm() * orthoVector.norm()))
     }
 
     getParallelAngle(freeVector, paraVector) {
@@ -134,7 +134,7 @@ class AngularPoseRule {
             return -1;
         }
         return Math.acos(freeVector.dot(paraVector) /
-        (freeVector.norm() * paraVector.norm()))
+            (freeVector.norm() * paraVector.norm()))
         // TODO: figure out the necessaary adjustments
     }
 }
