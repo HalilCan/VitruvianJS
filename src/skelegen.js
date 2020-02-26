@@ -1,5 +1,18 @@
-let generateSkeleton = (poseObject) => {
+let limbLength = (poseNode1, poseNode2) => {
+    let v1 = new Vector(poseNode1.x, poseNode1.y, poseNode1.z, poseNode1.confidence);
+    let v2 = new Vector(poseNode2.x, poseNode2.y, poseNode2.z, poseNode2.confidence);
 
+    return (v1.subtract(v2)).norm();
+}
+
+let projectPoseTo2d = (poseObject) => {
+    let rightLeftUpperArmRatio = limbLength(poseObject.rightShoulder, poseObject.rightElbow) /
+        limbLength(poseObject.leftShoulder, poseObject.leftElbow);
+
+}
+
+let generateSkeleton = (poseObject) => {
+    let flatPose = projectPoseTo2d(poseObject);
 };
 
 let generateLimb = (keyPointOne, keyPointTwo) => {
@@ -13,7 +26,7 @@ let generateLimb = (keyPointOne, keyPointTwo) => {
 };
 
 let upperArmToTorsoAngle = (upperArmVector, torsoVector) => {
-    return Math.acos(upperArmVector.dot(torsoVector) / 
+    return Math.acos(upperArmVector.dot(torsoVector) /
         (upperArmVector.norm() * torsoVector.norm()));
 };
 
@@ -28,8 +41,8 @@ let upperArmVectors = (poseObj) => {
             relbowObj.x, relbowObj.y, 0, relbowObj.confidence
         )
         let rArm = rElbow.subtract(rShoulder);
-    
-    
+
+
         let lsObj = poseObj.leftShoulder;
         let lShoulder = new Vector(
             lsObj.x, lsObj.y, 0, lsObj.confidence
@@ -69,13 +82,13 @@ let shoulderVector = (poseObj) => {
         let rShoulder = new Vector(
             rsObj.x, rsObj.y, 0, rsObj.confidence
         )
-    
+
         let lsObj = poseObj.leftShoulder;
         let lShoulder = new Vector(
             lsObj.x, lsObj.y, 0, lsObj.confidence
         )
-    
-        return rShoulder.subtract(lShoulder);
+
+        return lShoulder.subtract(rShoulder);
     }
 };
 
@@ -96,6 +109,6 @@ let relativePointOrientation = (p1, p2) => {
 }
 
 let upperArmToShoulderAngle = (upperArmVector, shoulderVector) => {
-    return Math.acos(upperArmVector.dot(shoulderVector) / 
+    return Math.acos(upperArmVector.dot(shoulderVector) /
         (upperArmVector.norm() * shoulderVector.norm()));
 };
