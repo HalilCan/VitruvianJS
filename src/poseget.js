@@ -3,6 +3,8 @@ let poseNet;
 let pose;
 let skeleton;
 let jitterRatio = 30;
+let clapCount = 0;
+let isClap = 0;
 
 function setup() {
     createCanvas(640, 480);
@@ -75,11 +77,18 @@ function gotPoses(poses) {
     pose = correctJitter(pose, tempPose, jitterRatio);
     skeleton = poses[0].skeleton;
 
-    // testing AngularPose
     let angularPose = new AngularPose(pose);
     let jointAnglesString = angularPose.getPrintableJointAngles();
     updateAngleReporter(jointAnglesString);
-    // testing AngularPose
+
+    let clapResult = angularPose.clapRuleCheck(isClap);
+    clapCount += clapResult.change;
+    isClap = clapResult.state;
+    if (clapResult.isTorsoUpright == 0) {
+        updateRuleReporter(`X - Keep your torso upright when you clap. Clap count: ${clapCount}`);
+    } else {
+        updateRuleReporter(`:) Please clap. Clap count: ${clapCount}`);
+    }
 
 }
 

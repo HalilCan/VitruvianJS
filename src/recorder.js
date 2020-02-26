@@ -10,6 +10,7 @@ let logElement;
 let recordingTimeMS = 5000;
 
 let angleReporter;
+let ruleReporter;
 /////////////////////////////
 
 function log(msg) {
@@ -116,6 +117,14 @@ let updateAngleReporter = (innerHTML) => {
     angleReporter.innerHTML = innerHTML;
 }
 
+let updateReporter = (reporter, htmlUpdate) => {
+    reporter.innerHTML = update;
+}
+
+let updateRuleReporter = (htmlUpdate) => {
+    ruleReporter.innerHTML = htmlUpdate;
+}
+
 window.addEventListener('load',
     () => {
         preview = document.getElementById("preview");
@@ -127,6 +136,7 @@ window.addEventListener('load',
         downloadButton = document.getElementById("downloadButton");
         logElement = document.getElementById("log");
         angleReporter = document.getElementById("angle-reporter");
+        ruleReporter = document.getElementById("rule-reporter");
 
 
         setStartButtonAsRecorder();

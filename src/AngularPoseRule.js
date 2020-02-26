@@ -1,4 +1,4 @@
-class AngularPose {
+class AngularPoseRule {
     constructor(pose) {
         this.pose = pose;
         let armVectorArray = this.getArmVectors();
@@ -11,11 +11,7 @@ class AngularPose {
         this.v_rightToLeftShoulder = this.shoulderVector();
         this.v_rightToLeftHips = this.getVectorFromPoints(`rightHip`, `leftHip`);
 
-        this.leftWristVector = this.pointToVector(`leftWrist`);
-        this.rightWristVector = this.pointToVector(`rightWrist`);
-        this.wristDistance = (this.leftWristVector.subtract(this.rightWristVector)).norm();
-
-        this.jointAngles = {
+        this.minAngles = {
             rightShoulder: this.getOrthogonalAngle(this.v_rightUpperArm, this.v_torsoNormal),
             rightElbow: this.getOrthogonalAngle(this.v_rightForeArm, (this.v_rightUpperArm.twoDimensionalOrthoVector())),
             leftShoulder: this.getOrthogonalAngle(this.v_leftUpperArm, this.v_torsoNormal),
@@ -24,44 +20,13 @@ class AngularPose {
         }
     }
 
+    setMinAngles(angleArray) {
+        
+    }
+
     getJointAngles() {
         //console.log(this.jointAngles);
         return this.jointAngles;
-    }
-
-    pointToVector(pointName) {
-        if (this.pose) {
-            let pointObj = this.pose[pointName];
-            let pointVector = new Vector(
-                pointObj.x, pointObj.y, 0, pointObj.confidence
-            )
-
-            return pointVector;
-        } else {
-            console.log(`PTV error`);
-            return -1;
-        }
-    }
-
-    clapRuleCheck(clapState) {
-        let distLimit = this.v_rightToLeftShoulder.norm() / 2;
-        let result = {
-            isTorsoUpright: 0,
-            change: 0,
-            state: clapState
-        };
-        result.isTorsoUpright = (this.jointAngles.torso > 1.2 && this.jointAngles.torso < 1.6);
-        if (clapState == 1) {
-            if (this.wristDistance > distLimit) {
-                result.state = 0;
-            }
-        } else {
-            if (this.wristDistance <= distLimit) {
-                result.state = 1;
-                result.change = 1;
-            }
-        }
-        return result;
     }
 
     getPrintableJointAngles() {
@@ -161,7 +126,7 @@ class AngularPose {
         }
 
         return Math.acos(freeVector.dot(orthoVector) /
-            (freeVector.norm() * orthoVector.norm()))
+        (freeVector.norm() * orthoVector.norm()))
     }
 
     getParallelAngle(freeVector, paraVector) {
@@ -169,7 +134,7 @@ class AngularPose {
             return -1;
         }
         return Math.acos(freeVector.dot(paraVector) /
-            (freeVector.norm() * paraVector.norm()))
+        (freeVector.norm() * paraVector.norm()))
         // TODO: figure out the necessaary adjustments
     }
 }
