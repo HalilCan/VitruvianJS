@@ -5,6 +5,18 @@ class Vector {
       this.z = z;
       this.confidence = confidence;
     }
+    equals(some) {
+      if (some.x != undefined) {
+        return (
+          this.x == some.x &&
+          this.y == some.y &&
+          this.z == some.z &&
+          this.confidence == some.confidence
+        )
+      } else {
+        return this.x == undefined;
+      }
+    }
     add(v) {
       return new Vector(this.x + v.x, this.y + v.y, this.z + v.z, 
         (this.confidence + v.confidence) / 2);

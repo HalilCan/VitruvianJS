@@ -11,8 +11,6 @@ class AngularPose {
         this.v_rightToLeftShoulder = this.shoulderVector();
         this.v_rightToLeftHips = this.getVectorFromPoints(`rightHip`, `leftHip`);
 
-        console.log(`GVFP comparison: ${armVectorArray[0]} vs ${this.getVectorFromPoints("rightShoulder", "rightElbow")}`);
-
         this.jointAngles = {
             rightShoulder: this.getOrthogonalAngle(this.v_rightUpperArm, this.v_torsoNormal),
             rightElbow: this.getOrthogonalAngle(this.v_rightForeArm, (this.v_rightUpperArm.twoDimensionalOrthoVector())),
@@ -32,6 +30,7 @@ class AngularPose {
         for (var key of Object.keys(this.jointAngles)) {
             printable += ("\n " + key + " -> " + this.jointAngles[key]);
         }
+        return printable;
     }
 
     torsoVector() {
