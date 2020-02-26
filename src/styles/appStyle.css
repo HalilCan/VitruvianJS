@@ -4,13 +4,12 @@
     width: 100vw;
     height: 1000px;
     max-height: 1000px;
-
     border: 1px solid black;
     border-radius: 4px;
 }
 
 .lower-container {
-    flex:1;
+    flex: 1;
     display: flex;
     flex-direction: row;
     width: 100vw;

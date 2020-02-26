@@ -44,14 +44,14 @@ class AngularPose {
     }
 
     clapRuleCheck(clapState) {
-        let distLimit = this.v_rightToLeftShoulder.norm() / 2;
+        let distLimit = this.v_rightToLeftShoulder.norm() / 1.8;
         let result = {
             isTorsoUpright: 0,
             change: 0,
             state: clapState
         };
         updateTorsoAngleSeries(this.jointAngles.torso);
-        result.isTorsoUpright = (this.jointAngles.torso > 1.5 && this.jointAngles.torso < 1.7);
+        result.isTorsoUpright = (this.jointAngles.torso > 1.2 && this.jointAngles.torso < 1.7);
         if (clapState == 1) {
             if (this.wristDistance > distLimit) {
                 result.state = 0;
