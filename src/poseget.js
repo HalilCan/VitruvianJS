@@ -2,6 +2,7 @@ let video;
 let poseNet;
 let pose;
 let skeleton;
+let jitterRatio = 30;
 
 function setup() {
     createCanvas(640, 480);
@@ -11,14 +12,68 @@ function setup() {
     poseNet.on('pose', gotPoses);
 }
 
+function isJitter(oldPose, newPose, ratio) {
+    if (!oldPose || !newPose) {
+        return false;
+    }
+    for (let key of Object.keys(oldPose)) {
+        if (oldPose.key.x > 0) {
+            if ((Math.abs(oldPose[key].x - newPose[key].x) > (oldPose[key].x / ratio)) ||
+                (Math.abs(oldPose[key].y - newPose[key].y) > (oldPose[key].y / ratio))) {
+                return false;
+            }
+        }
+    }
+    console.log(`jitter detected`);
+    return true;
+}
+
+function correctJitter(oldPose, newPose, ratio) {
+    if (!oldPose) {
+        return newPose;
+    }
+    if (!newPose) {
+        return oldPose;
+    }
+    let correctedPose = oldPose;
+
+    for (let key of Object.keys(oldPose)) {
+        if (oldPose[key].x > 0) {
+            if ((Math.abs(oldPose[key].x - newPose[key].x) > (oldPose[key].x / ratio))) {
+                correctedPose[key].x = newPose[key].x;
+            }
+            if ((Math.abs(oldPose[key].y - newPose[key].y) > (oldPose[key].y / ratio))) {
+                correctedPose[key].y = newPose[key].y;
+            }
+        }
+    }
+
+    for (let i = 0; i < correctedPose.keypoints.length; i++) {
+        if ((Math.abs(oldPose.keypoints[i].position.x - newPose.keypoints[i].position.x) > (oldPose.keypoints[i].position.x / ratio))) {
+            correctedPose.keypoints[i].position.x = newPose.keypoints[i].position.x;
+        }
+        if ((Math.abs(oldPose.keypoints[i].position.y - newPose.keypoints[i].position.y) > (oldPose.keypoints[i].position.y / ratio))) {
+            correctedPose.keypoints[i].position.y = newPose.keypoints[i].position.y;
+        }
+    }
+    return correctedPose;
+}
+
 function gotPoses(poses) {
     console.log(poses);
+    let tempPose;
     if (poses.length > 0) {
-        pose = poses[0].pose;
-        skeleton = poses[0].skeleton;
+        tempPose = poses[0].pose;
     } else {
-        pose = poses;
+        return;
     }
+    /*
+    if (isJitter(pose, tempPose, jitterRatio) == true) {
+        return;
+    }*/
+
+    pose = correctJitter(pose, tempPose, jitterRatio);
+    skeleton = poses[0].skeleton;
 
     // testing AngularPose
     let angularPose = new AngularPose(pose);

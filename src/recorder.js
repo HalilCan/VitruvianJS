@@ -111,9 +111,9 @@ function setUploadButton() {
     
 }
 
-let updateAngleReporter = (innerText) => {
+let updateAngleReporter = (innerHTML) => {
     //TODO: only right arm for now, change to keyVal structure for all
-    angleReporter.innerHTML = innerText;
+    angleReporter.innerHTML = innerHTML;
 }
 
 window.addEventListener('load',

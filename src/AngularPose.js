@@ -4,9 +4,9 @@ class AngularPose {
         let armVectorArray = this.getArmVectors();
 
         this.v_torsoNormal = this.torsoVector();
-        this.v_leftUpperArm = armVectorArray[1];
+        this.v_leftUpperArm = this.getVectorFromPoints(`leftShoulder`, `leftElbow`);
         this.v_leftForeArm = this.getVectorFromPoints(`leftElbow`, `leftWrist`);
-        this.v_rightUpperArm = armVectorArray[0];
+        this.v_rightUpperArm = this.getVectorFromPoints(`rightShoulder`, `rightElbow`);
         this.v_rightForeArm = this.getVectorFromPoints(`rightElbow`, `rightWrist`);
         this.v_rightToLeftShoulder = this.shoulderVector();
         this.v_rightToLeftHips = this.getVectorFromPoints(`rightHip`, `leftHip`);
@@ -15,20 +15,20 @@ class AngularPose {
             rightShoulder: this.getOrthogonalAngle(this.v_rightUpperArm, this.v_torsoNormal),
             rightElbow: this.getOrthogonalAngle(this.v_rightForeArm, (this.v_rightUpperArm.twoDimensionalOrthoVector())),
             leftShoulder: this.getOrthogonalAngle(this.v_leftUpperArm, this.v_torsoNormal),
-            leftElbow: this.getOrthogonalAngle(this.v_leftForeArm, (this.v_leftUpperArm.twoDimensionalOrthoVector())),
+            leftElbow: this.getOrthogonalAngle(this.v_leftForeArm, (this.v_leftUpperArm.twoDimensionalOrthoVector().invert())),
             torso: this.getOrthogonalAngle(this.v_torsoNormal, this.v_rightToLeftHips),
         }
     }
 
     getJointAngles() {
-        console.log(this.jointAngles);
+        //console.log(this.jointAngles);
         return this.jointAngles;
     }
 
     getPrintableJointAngles() {
         let printable = "";
-        for (var key of Object.keys(this.jointAngles)) {
-            printable += ("\n " + key + " -> " + this.jointAngles[key]);
+        for (let key of Object.keys(this.jointAngles)) {
+            printable += ("<br></br>" + key + " -> " + this.jointAngles[key]);
         }
         return printable;
     }
