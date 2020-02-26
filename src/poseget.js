@@ -16,29 +16,16 @@ function gotPoses(poses) {
     if (poses.length > 0) {
         pose = poses[0].pose;
         skeleton = poses[0].skeleton;
+    } else {
+        pose = poses;
     }
-    let torsoVec = torsoVector(pose);
-    let shoulderVec = shoulderVector(pose);
-    let upperArmVecs = upperArmVectors(pose);
 
-    if (upperArmVecs[0] != undefined) {
-        let rightAngle = upperArmToTorsoAngle(upperArmVecs[0], torsoVec);
-        let leftAngle = upperArmToTorsoAngle(upperArmVecs[1], torsoVec);
+    // testing AngularPose
+    let angularPose = new AngularPose(pose);
+    let jointAnglesString = angularPose.getPrintableJointAngles();
+    updateAngleReporter(jointAnglesString);
+    // testing AngularPose
 
-        let rightAngle2 = upperArmToShoulderAngle(upperArmVecs[0], shoulderVec);
-        /* if (relativePointOrientation(upperArmVecs[0], pose.rightShoulder)[1] == 2) {
-            rightAngle2 = rightAngle2 + .5;
-        } else {
-            rightAngle2 = rightAngle2; 
-        } */
-        let leftAngle2 = upperArmToShoulderAngle(upperArmVecs[1], shoulderVec);
-
-        
-        updateAngleReporter(
-            [rightAngle * 180 / Math.PI, leftAngle * 180 / Math.PI,
-            (rightAngle2 + 0) * 180 / Math.PI, (leftAngle2 - 0) * 180 / Math.PI]
-        );
-    }
 }
 
 function modelLoaded() {

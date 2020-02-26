@@ -1,29 +1,37 @@
 class AngularPose {
     constructor(pose) {
         this.pose = pose;
+        let armVectorArray = this.getArmVectors();
 
         this.v_torsoNormal = this.torsoVector();
-        this.v_leftUpperArm = upperArmVectorArray[1];
+        this.v_leftUpperArm = armVectorArray[1];
         this.v_leftForeArm = this.getVectorFromPoints(`leftElbow`, `leftWrist`);
-        this.v_rightUpperArm = upperArmVectorArray[0];
+        this.v_rightUpperArm = armVectorArray[0];
         this.v_rightForeArm = this.getVectorFromPoints(`rightElbow`, `rightWrist`);
         this.v_rightToLeftShoulder = this.shoulderVector();
         this.v_rightToLeftHips = this.getVectorFromPoints(`rightHip`, `leftHip`);
 
-        console.log(`GVFP comparison: ${upperArmVectorArray[0]} vs ${this.getVectorFromPoints("rightShoulder", "rightElbow")}`);
+        console.log(`GVFP comparison: ${armVectorArray[0]} vs ${this.getVectorFromPoints("rightShoulder", "rightElbow")}`);
 
-        this.angles = {
-            rightShoulder: -1,
-            rightElbow: -1,
-            leftShoulder: -1,
-            leftElbow: -1,
-            torso: -1,
+        this.jointAngles = {
+            rightShoulder: this.getOrthogonalAngle(this.v_rightUpperArm, this.v_torsoNormal),
+            rightElbow: this.getOrthogonalAngle(this.v_rightForeArm, (this.v_rightUpperArm.twoDimensionalOrthoVector())),
+            leftShoulder: this.getOrthogonalAngle(this.v_leftUpperArm, this.v_torsoNormal),
+            leftElbow: this.getOrthogonalAngle(this.v_leftForeArm, (this.v_leftUpperArm.twoDimensionalOrthoVector())),
+            torso: this.getOrthogonalAngle(this.v_torsoNormal, this.v_rightToLeftHips),
         }
     }
 
-    generateAngles() {
-        let pose = this.pose;
+    getJointAngles() {
+        console.log(this.jointAngles);
+        return this.jointAngles;
+    }
 
+    getPrintableJointAngles() {
+        let printable = "";
+        for (var key of Object.keys(this.jointAngles)) {
+            printable += ("\n " + key + " -> " + this.jointAngles[key]);
+        }
     }
 
     torsoVector() {
@@ -62,7 +70,7 @@ class AngularPose {
         }
     }
 
-    upperArmVectors() {
+    getArmVectors() {
         if (this.pose) {
             let rsObj = this.pose.rightShoulder;
             let rShoulder = new Vector(
@@ -107,5 +115,23 @@ class AngularPose {
             console.log(`GVFP error`);
             return -1;
         }
+    }
+
+    getOrthogonalAngle(freeVector, orthoVector) {
+        if (freeVector.equals(-1) || orthoVector.equals(-1)) {
+            return -1;
+        }
+
+        return Math.acos(freeVector.dot(orthoVector) /
+        (freeVector.norm() * orthoVector.norm()))
+    }
+
+    getParallelAngle(freeVector, paraVector) {
+        if (freeVector.equals(-1) || paraVector.equals(-1)) {
+            return -1;
+        }
+        return Math.acos(freeVector.dot(paraVector) /
+        (freeVector.norm() * paraVector.norm()))
+        // TODO: figure out the necessaary adjustments
     }
 }

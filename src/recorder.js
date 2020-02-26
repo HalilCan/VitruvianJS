@@ -10,9 +10,6 @@ let logElement;
 let recordingTimeMS = 5000;
 
 let angleReporter;
-let angleReporter2;
-let angleReporter3;
-let angleReporter4;
 /////////////////////////////
 
 function log(msg) {
@@ -114,12 +111,9 @@ function setUploadButton() {
     
 }
 
-let updateAngleReporter = (newAngle) => {
+let updateAngleReporter = (innerText) => {
     //TODO: only right arm for now, change to keyVal structure for all
-    angleReporter.innerHTML = ("Right arm angle: " + newAngle[0]);
-    angleReporter2.innerHTML = ("Left arm angle: " + newAngle[1]);
-    angleReporter3.innerHTML = ("Right arm angle: " + newAngle[2]);
-    angleReporter4.innerHTML = ("Left arm angle: " + newAngle[3]);
+    angleReporter.innerHTML = innerText;
 }
 
 window.addEventListener('load',
@@ -132,10 +126,7 @@ window.addEventListener('load',
         uploadedVideo = document.getElementById("uploaded");
         downloadButton = document.getElementById("downloadButton");
         logElement = document.getElementById("log");
-        angleReporter = document.getElementById("angle-reporter-right-arm");
-        angleReporter2 = document.getElementById("angle-reporter-left-arm");
-        angleReporter3 = document.getElementById("angle-reporter-right-arm-2");
-        angleReporter4 = document.getElementById("angle-reporter-left-arm-2");
+        angleReporter = document.getElementById("angle-reporter");
 
 
         setStartButtonAsRecorder();

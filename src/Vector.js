@@ -37,6 +37,12 @@ class Vector {
         (this.confidence + v.confidence) / 2
       );
     }
+    twoDimensionalOrthoVector() {
+      return this.cross(new Vector(0, 0, 1, this.confidence));
+    }
+    invert() {
+      return new Vector(-this.x, -this.y, -this.z, this.confidence);
+    }
     projectionOnto(v) {
       return (this.dot(v) / v.norm());
       //this.dot(v) is |this||v|cosTheta
