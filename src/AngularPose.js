@@ -50,7 +50,8 @@ class AngularPose {
             change: 0,
             state: clapState
         };
-        result.isTorsoUpright = (this.jointAngles.torso > 1.2 && this.jointAngles.torso < 1.6);
+        updateTorsoAngleSeries(this.jointAngles.torso);
+        result.isTorsoUpright = (this.jointAngles.torso > 1.5 && this.jointAngles.torso < 1.7);
         if (clapState == 1) {
             if (this.wristDistance > distLimit) {
                 result.state = 0;

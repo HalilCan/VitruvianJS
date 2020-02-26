@@ -1,0 +1,42 @@
+.bottom {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 1000px;
+    max-height: 1000px;
+
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+.lower-container {
+    flex:1;
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: auto;
+    align-content: center;
+    justify-content: center;
+}
+
+#tseries-graph {
+    width: 1600px;
+}
+
+.upper-container {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: auto;
+    align-content: center;
+    justify-content: center;
+}
+
+.upper-container * {
+    margin-right: 10px;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 4px;
+    min-width: 400px;
+}

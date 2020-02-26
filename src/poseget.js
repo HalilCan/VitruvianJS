@@ -7,7 +7,8 @@ let clapCount = 0;
 let isClap = 0;
 
 function setup() {
-    createCanvas(640, 480);
+    let newCanvas = createCanvas(640, 480);
+    newCanvas.parent("canvas-container");
     video = createCapture(VIDEO);
     video.hide();
     poseNet = ml5.poseNet(video, modelLoaded);
